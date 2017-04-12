@@ -1,12 +1,18 @@
-from wsi.descriptions import Pattern
+from wsi.des import Pattern
 
 is_app = True
 
 IS_APP_STABLE = True
 
-patterns = (
-    Pattern(name='^7-Zip', publisher='^Igor Pavlov', version='^16.04')
-)
+reg_pattern = {
+    'DisplayName': '7-Zip 16.04',
+    'Publisher': 'Igor Pavlov',
+    'DisplayVersion': '16.04',
+}
+
+
+# def is_installed():
+#    pass
 
 
 _exefilename = '7z1604.exe'
@@ -49,16 +55,12 @@ def config(config_option):
 
 
 
-def uninstall():
+def uninstall(uninstall_string=None):
     import os
-    for one in _get_installed():
-        os.system(one.uninstall_cmd + '/S')
+    os.system(uninstall_string)
 
 
-def is_installed():
-    return bool(_get_installed())
-
-
+<<<<<<< HEAD
 def _get_installed():
     import re
     from wsi.reg_program import get_reg_apps
@@ -70,3 +72,7 @@ def _get_installed():
             _installed.append(one)
 
     return _installed
+=======
+def config(settings=None):
+    pass
+>>>>>>> c193f92bc88887bdf61e9182a68fd92f1632c68f
