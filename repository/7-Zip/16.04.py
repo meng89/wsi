@@ -11,9 +11,11 @@ patterns = (
 
 _exefilename = '7z1604.exe'
 
-MAIN_SRC = {'FILENAME': _exefilename,
-            'URI':      'http://7-zip.org/a/' + _exefilename,
-            'SHA512':   ''}
+SRCS = [
+    {'filename': _exefilename,
+     'uri':      'http://7-zip.org/a/' + _exefilename,
+     'sha512':   ''}
+]
 
 INSTALL_OPTION = {}
 
@@ -38,9 +40,13 @@ def_settings_options = None
 depend = None
 
 
-def install(*args, **kwargs):
+def install(srcs):
     import os
-    os.system('{}/{} /S'.format(kwargs['distfiles'], _exefilename))
+    os.system('{} /S'.format(srcs[_exefilename]))
+
+
+def config(config_option):
+
 
 
 def uninstall():
@@ -51,10 +57,6 @@ def uninstall():
 
 def is_installed():
     return bool(_get_installed())
-
-
-def config(options):
-    pass
 
 
 def _get_installed():
