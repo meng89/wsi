@@ -1,4 +1,4 @@
-from wsi.descriptions import WorldApp
+from wsi.des import WorldApp
 
 sz = WorldApp(name='7-Zip', version='16.04', settings={'cur_user_associations': ('7z', 'zip', 'rar'),
                                                        'all_users_associations': ('7z', 'zip', 'rar')})
@@ -10,4 +10,4 @@ sz = WorldApp(name='7-Zip', version='16.04', settings={'cur_user_associations': 
 
 apps_only_be_depended = WorldApp(name='lib1')
 
-apps = sz,
+apps = (sz,)

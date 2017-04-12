@@ -5,7 +5,7 @@ import sys
 
 import wsi
 from wsi import load_module
-from wsi.descriptions import WorldApp
+from wsi.des import WorldApp
 from wsi.reg_program import RegApp
 
 
