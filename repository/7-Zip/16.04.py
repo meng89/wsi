@@ -51,28 +51,10 @@ def install(srcs):
     os.system('{} /S'.format(srcs[_exefilename]))
 
 
-def config(config_option):
-
-
-
 def uninstall(uninstall_string=None):
     import os
     os.system(uninstall_string)
 
 
-<<<<<<< HEAD
-def _get_installed():
-    import re
-    from wsi.reg_program import get_reg_apps
-
-    _installed = []
-
-    for one in get_reg_apps():
-        if re.match('7-Zip', one.display_name):
-            _installed.append(one)
-
-    return _installed
-=======
 def config(settings=None):
     pass
->>>>>>> c193f92bc88887bdf61e9182a68fd92f1632c68f
