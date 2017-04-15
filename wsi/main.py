@@ -1,6 +1,8 @@
-
 def find_module(app):
+    if app.repository is None:
 
+
+    return module_
 
 
 
