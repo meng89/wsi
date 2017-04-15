@@ -5,7 +5,7 @@ import sys
 
 import wsi
 from wsi import load_module
-from wsi.des import WorldApp
+from wsi.des import App
 from wsi.reg_program import RegApp
 
 
@@ -30,7 +30,7 @@ def get_installed_apps():
         app_name = is_match(reg_app, )
 
 
-def match_module(worldapp: WorldApp):
+def match_module(worldapp: App):
 
     app_dirs = []
 

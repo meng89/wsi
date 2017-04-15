@@ -1,8 +1,16 @@
+
+def find_module(app):
+
+
+
+
 def install(softs):
-    for soft in softs:
-        if is_installed(soft):
-            pass
-        else
+    for sm in soft_modules:
+        if hasattr(sm, 'is_installed'):
+            if sm.is_installed():
+                continue
+
+
 
 
 

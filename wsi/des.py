@@ -7,7 +7,7 @@ class Pattern:
         self.version = version
 
 
-class WorldApp:
+class App:
     def __init__(self, name, version=None, repository=None, install_options=None, settings=None):
         self.repository = repository
 
