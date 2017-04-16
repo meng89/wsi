@@ -5,32 +5,40 @@ version = (0, 0, 1)
 
 # OFFICAL_REPO_NAME = 'offical'
 
-_modules = {}
-
 _repos = {}
 
 _dists = {}
 
 
-def load_module(pypath: str, my_file=None, repo=None):
+_modules = {}
 
-    def _get_module_from_file(_path):
+
+def load_module(pypath, my_file=None):
+
+    def _get_module_from_file_py35(_path):
         spec = importlib.util.spec_from_file_location(_path, _path)
         _module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(_module)
+        return _module
+
+    def _get_module_from_file_py34(_path):
+        from importlib.machinery import SourceFileLoader
+        _module = SourceFileLoader(_path, _path).load_module()
         return _module
 
     _p = ''
 
     if my_file is not None:
         _p = os.path.dirname(my_file)
-    elif repo is not None:
-        _p = _repos[repo]
 
     abs_path = os.path.abspath(os.path.join(_p, pypath))
 
     try:
         return _modules[abs_path]
     except KeyError:
-        _modules[abs_path] = _get_module_from_file(abs_path)
+        try:
+            _modules[abs_path] = _get_module_from_file_py35(abs_path)
+        except AttributeError:
+            _modules[abs_path] = _get_module_from_file_py34(abs_path)
+
         return _modules[abs_path]

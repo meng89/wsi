@@ -9,7 +9,7 @@ def INSTALL(*args, **kwargs):
     import os
     from wsi import env
 
-    os.system('{}/{} /S'.format(env.DISTFILES['official'], _exefilename))
+    os.system('{}/{} /S'.format(env.RESOURCES['official'], _exefilename))
 
 
 def IS_INSTALLED():

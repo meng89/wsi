@@ -1,6 +1,6 @@
 
 repositories = (
-    './repository',
+    './official',
 )
 
 distfileses = (
