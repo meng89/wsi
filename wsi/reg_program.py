@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import winreg
+import winger
 
 
 class RegApp:
