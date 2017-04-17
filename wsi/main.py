@@ -93,11 +93,20 @@ def get_reg_apps():
 
 
 def is_installed(module_):
-    regapps = get_reg_apps()
+    if hasattr(module_, 'is_installed'):
+        if module_.is_installed():
+            return True
+        else:
+            return False
 
-    for one in regapps:
-        if one >= module_.reg_pattern:
-            return
+    else:
+        regapps = get_reg_apps()
+
+        for one in regapps:
+            if one >= module_.reg_pattern:
+                return True
+
+        return False
 
 
 def install(apps):
@@ -107,15 +116,10 @@ def install(apps):
         if not m_:
             raise FileNotFoundError
 
-        if hasattr(m_, 'is_installed'):
-            if m_.is_installed():
-                continue
-            else:
-                pass
         if is_installed(m_):
             continue
         else:
-            pass
+            m_.install()
 
 
 def main():
