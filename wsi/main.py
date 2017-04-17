@@ -82,6 +82,24 @@ def find_module(app):
     return module_
 
 
+def get_reg_apps():
+    import winger
+
+    regapps = []
+    for key in (r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
+                r'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'):
+        regapps.extend(winger.Tips(key).items())
+    return regapps
+
+
+def is_installed(module_):
+    regapps = get_reg_apps()
+
+    for one in regapps:
+        if one >= module_.reg_pattern:
+            return
+
+
 def install(apps):
     for app in apps:
         m_ = find_module(app)
@@ -89,10 +107,15 @@ def install(apps):
         if not m_:
             raise FileNotFoundError
 
-        if hasattr(m_, 'is_installed') and m_.is_installed():
+        if hasattr(m_, 'is_installed'):
+            if m_.is_installed():
+                continue
+            else:
+                pass
+        if is_installed(m_):
             continue
-
-        if
+        else:
+            pass
 
 
 def main():

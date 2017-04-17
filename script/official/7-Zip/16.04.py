@@ -43,7 +43,12 @@ avl_settings_options = {
 def_settings_options = None
 
 
-depend = None
+def depend():
+    return None
+
+
+def against():
+    return None
 
 
 def install(srcs):

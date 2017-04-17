@@ -11,12 +11,3 @@ class RegApp:
         self.uninstall_string = uninstall_string
         self.is_hidden = is_hidden
 
-
-def get_reg_apps():
-    regapps = []
-    for key in (r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
-                r'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'):
-        regapps.extend(winger.Tips(key).items())
-    return regapps
-
-
