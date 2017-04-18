@@ -51,9 +51,9 @@ def against():
     return None
 
 
-def install(srcs):
+def install(resource_dir):
     import os
-    os.system('{} /S'.format(srcs[_exefilename]))
+    os.system('{} /S'.format(os.path.join(resource_dir, _exefilename)))
 
 
 def uninstall(uninstall_string=None):
