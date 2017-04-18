@@ -71,15 +71,18 @@ def find_module(app):
     from wsi.env import exe_dir, SCRIPTS
 
     module_ = None
+    repo = None
+
     if app.repository is None:
         for k, dir_ in SCRIPTS.items():
             module_ = _get_module(app, dir_)
+            repo = app.repository
     else:
         repo = app.repository
         dir_ = SCRIPTS[repo]
         module_ = _get_module(app, dir_)
 
-    return module_
+    return module_, repo
 
 
 def get_reg_apps():
@@ -111,7 +114,7 @@ def is_installed(module_):
 
 def install(apps):
     for app in apps:
-        m_ = find_module(app)
+        m_, repo = find_module(app)
 
         if not m_:
             raise FileNotFoundError
