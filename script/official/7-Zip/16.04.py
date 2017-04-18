@@ -20,7 +20,7 @@ _exefilename = '7z1604.exe'
 SRCS = [
     {'filename': _exefilename,
      'uri':      'http://7-zip.org/a/' + _exefilename,
-     'sha512':   ''}
+     'sha256':   ''}
 ]
 
 INSTALL_OPTION = {}

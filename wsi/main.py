@@ -113,6 +113,7 @@ def is_installed(module_):
 
 
 def install(apps):
+    from wsi.env import RESOURCES
     for app in apps:
         m_, repo = find_module(app)
 
@@ -122,7 +123,7 @@ def install(apps):
         if is_installed(m_):
             continue
         else:
-            m_.install()
+            m_.install(resource_dir=RESOURCES[repo][app.name])
 
 
 def main():
