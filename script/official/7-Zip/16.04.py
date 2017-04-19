@@ -53,7 +53,9 @@ def against():
 
 def install(resource_dir):
     import os
-    os.system('{} /S'.format(os.path.join(resource_dir, _exefilename)))
+    from subprocess import Popen
+    p = Popen([os.path.join(resource_dir, _exefilename), '/S'])
+    p.wait()
 
 
 def uninstall(uninstall_string=None):
