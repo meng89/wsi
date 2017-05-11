@@ -36,10 +36,12 @@ def_install_options = None
 _able_associations = {'7z', 'zip', 'rar', '001', 'cab', 'iso', 'xz', 'txz', 'lzma', 'tar', 'cpio', 'bz2', 'bzip2',
                       'tbz2', 'tbz', 'gz', 'gzip', 'tgz', 'tpz', 'z', 'taz', 'lzh', 'lha', 'rpm', 'deb', 'arj', 'vhd',
                       'wim', 'swm', 'fat', 'ntfs', 'dmg', 'hfs', 'xar', 'squashfs'}
+
 avl_settings_options = {
     'cur_user_associations': _able_associations,
     'all_users_associations': _able_associations
 }
+
 def_settings_options = None
 
 
@@ -51,7 +53,7 @@ def against():
     return None
 
 
-def install(resource_dir):
+def install(io=None, env=None):
     import os
     from subprocess import Popen
     p = Popen([os.path.join(resource_dir, _exefilename), '/S'])

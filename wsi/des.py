@@ -8,13 +8,15 @@ class Pattern:
 
 
 class App:
-    def __init__(self, name, version=None, repository=None, install_options=None, settings=None):
+    def __init__(self, name, version=None, repository=None, io=None, so=None):
         self.repository = repository
 
         self.name = name
 
         self.version = version
 
-        self.install_options = install_options
+        # Installtion Options
+        self.io = io
 
-        self.settings = settings
+        # Software Options
+        self.so = so

@@ -38,3 +38,10 @@ def exe_dir():
 SCRIPTS = OrderedDict()
 
 RESOURCES = OrderedDict()
+
+
+class Env:
+    def __init__(self):
+        self.name = None
+        self.version = None
+        self.resource = None
