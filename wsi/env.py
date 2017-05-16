@@ -12,6 +12,8 @@ DEF_RESOURCE_DIRNAME = 'resource'
 
 BUNDLE_DATA_FOLDER = '_data'
 
+WINCDEMU_NAME = 'PortableWinCDEmu-4.0.exe'
+
 
 def is_exe():
     if getattr(sys, 'frozen', False) is not False:
@@ -33,6 +35,11 @@ def exe_path():
 
 def exe_dir():
     return os.path.dirname(exe_path())
+
+
+def wincdemu_path():
+    if is_exe():
+        return os.path.join(meipass_path(), BUNDLE_DATA_FOLDER, WINCDEMU_NAME)
 
 
 SCRIPTS = OrderedDict()
