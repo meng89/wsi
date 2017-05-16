@@ -1,0 +1,45 @@
+<Configuration Product="ProPlus">
+
+    <Display Level="full" CompletionNotice="yes" SuppressModal="no" AcceptEula="yes" />
+
+    <!-- <Logging Type="standard" Path="%temp%" Template="Microsoft Office Professional Plus Setup(*).txt" /> -->
+
+    <!-- <USERNAME Value="Customer" /> -->
+
+    <!-- <COMPANYNAME Value="MyCompany" /> -->
+
+    <!-- <INSTALLLOCATION Value="%programfiles%\Microsoft Office" /> -->
+
+    <!-- <LIS CACHEACTION="CacheOnly" /> -->
+
+    <!-- <LIS SOURCELIST="\\server1\share\Office;\\server2\share\Office" /> -->
+
+    <!-- <DistributionPoint Location="\\server\share\Office" /> -->
+
+    <!-- <OptionState Id="OptionID" State="absent" Children="force" /> -->
+
+    {{% for item in navigation %}}
+        <OptionState Id="{{ item['id'] }}" State="{{ item['state'] }}" Children="force" />
+          <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+
+    <OptionState Id="WORDFiles" State="Local" Children="force" />
+    <OptionState Id="EXCELFiles" State="Local" Children="force" />
+    <OptionState Id="OUTLOOKFiles" State="Local" Children="force" />
+    <OptionState Id="PPTFiles" State="Local" Children="force" />
+
+    <OptionState Id="ACCESSFiles" State="Absent" Children="force" />
+    <OptionState Id="VisioPreviewerFiles" State="Absent" Children="force" />
+    <OptionState Id="PubPrimary" State="Absent" Children="force" />
+    <OptionState Id="OneNoteFiles" State="Absent" Children="force" />
+     <OptionState Id="XDOCSFiles" State="Absent" Children="force" />
+    <OptionState Id="GrooveFiles" State="Absent" Children="force" />
+
+    <OptionState Id="SHAREDFiles" State="Local" Children="force" />
+    <OptionState Id="TOOLSFiles" State="Local" Children="force" />
+
+    <!-- <Setting Id="SETUP_REBOOT" Value="IfNeeded" /> -->
+
+    <!-- <Command Path="%windir%\system32\msiexec.exe" Args="/i \\server\share\my.msi" QuietArg="/q" ChainPosition="after" Execute="install" /> -->
+
+</Configuration>
