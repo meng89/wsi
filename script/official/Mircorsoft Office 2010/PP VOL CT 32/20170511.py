@@ -28,9 +28,54 @@ ALL_INSTALL_OPTIONS = ['Access', 'Excel', 'InfoPath', 'OneNote', 'Outlook', 'Pow
 def_install_options = ['Excel', 'Word', 'Outlook', 'PowerPoint', 'Shared', 'Tools']
 
 
+def _make_config(io):
+
+    _ = {
+        'Access': 'ACCESSFiles',
+        'Excel': 'EXCELFiles',
+        'InfoPath': 'XDOCSFiles',
+        'OneNote': 'OneNoteFiles',
+        'Outlook': 'OUTLOOKFiles',
+        'PowerPoint': 'PPTFiles',
+        'Publisher': 'PubPrimary',
+        'SharePoint Workspace': 'GrooveFiles',
+        'Visio Viewer': '',
+        'Word': 'WORDFiles',
+        'Shared': 'SHAREDFiles',
+        'Tools': 'TOOLSFiles'
+         }
+
+    io_set = set(io)
+
+    import xml.dom.minidom
+    impl = xml.dom.minidom.getDOMImplementation()
+    dom = impl.createDocument(None, 'Configuration', None)
+    root = dom.documentElement
+    root.setAttribute('Product', 'ProPlus')
+
+    display = dom.createElement('Display')
+    display.setAttribute('Level', 'full')
+    display.setAttribute('CompletionNotice', 'yes')
+    display.setAttribute('SuppressModal', 'no')
+    display.setAttribute('AcceptEula', 'yes')
+    root.appendChild(display)
+
+    for one in io_set:
+        os = dom.createElement('OptionState')
+        os.setAttribute('Id', _[one])
+        os.setAttribute('State', 'Local')
+        os.setAttribute('Children', 'Force')
+        root.appendChild(os)
+
+    return root.toprettyxml()
+
+
 def install(io=None, source_files=None, env=None):
     io = io or def_install_options
 
+    from wsi.mount import mount
+    driver = mount(source_files[_iso])
+    
 
 def config(so=None):
     pass
