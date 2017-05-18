@@ -21,15 +21,14 @@ def sources():
     ]
     return _
 
-ALL_INSTALL_OPTIONS = ['Access', 'Excel', 'InfoPath', 'OneNote', 'Outlook', 'PowerPoint', 'Publisher',
+ALL_INSTALL_OPTIONS = {'Access', 'Excel', 'InfoPath', 'OneNote', 'Outlook', 'PowerPoint', 'Publisher',
                        'SharePoint Workspace', 'Visio Viewer', 'Word',
-                       'Shared', 'Tools']
+                       'Shared', 'Tools'}
 
 def_install_options = ['Excel', 'Word', 'Outlook', 'PowerPoint', 'Shared', 'Tools']
 
 
 def _make_config(io):
-
     _ = {
         'Access': 'ACCESSFiles',
         'Excel': 'EXCELFiles',
@@ -39,7 +38,7 @@ def _make_config(io):
         'PowerPoint': 'PPTFiles',
         'Publisher': 'PubPrimary',
         'SharePoint Workspace': 'GrooveFiles',
-        'Visio Viewer': '',
+        # 'Visio Viewer': '', # todo
         'Word': 'WORDFiles',
         'Shared': 'SHAREDFiles',
         'Tools': 'TOOLSFiles'
@@ -67,15 +66,34 @@ def _make_config(io):
         os.setAttribute('Children', 'Force')
         root.appendChild(os)
 
+    for one in (ALL_INSTALL_OPTIONS - io_set):
+        os = dom.createElement('OptionState')
+        os.setAttribute('Id', _[one])
+        os.setAttribute('Stage', 'Absent')
+        os.setAttribute('Children', 'Force')
+        root.appendChild(os)
+
     return root.toprettyxml()
 
 
 def install(io=None, source_files=None, env=None):
+    import os
+    from subprocess import Popen
+
     io = io or def_install_options
 
-    from wsi.mount import mount
+    from tempfile import mktemp
+    config_path = mktemp()
+    with open(config_path, 'w') as f:
+        f.write(_make_config(io))
+
+    from wsi.mount import mount, unmount
+
     driver = mount(source_files[_iso])
-    
+    setup_path = os.path.join(driver, 'setup.exe')
+    p = Popen([setup_path, '/config', config_path])
+    p.wait(60*60*60)
+
 
 def config(so=None):
     pass
