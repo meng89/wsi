@@ -7,9 +7,6 @@ import chardet
 from wsi.env import wincdemu_path
 
 
-
-
-
 def mount(file):
     file = os.path.realpath(file)
 
@@ -49,4 +46,4 @@ def mount(file):
 
 
 def unmount(file):
-    Popen([wincdemu_path(), '/umount', file])
+    Popen([wincdemu_path(), '/umount', os.path.realpath(file)])
