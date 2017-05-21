@@ -46,4 +46,4 @@ def mount(file):
 
 
 def unmount(file):
-    Popen([wincdemu_path(), '/umount', file])
+    Popen([wincdemu_path(), '/umount', os.path.realpath(file)])
