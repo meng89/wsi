@@ -112,6 +112,10 @@ def is_installed(module_):
         return False
 
 
+def temp_make_srcs(app_name):
+
+
+
 def install(apps):
     from wsi.env import RESOURCES
     for app in apps:
@@ -123,7 +127,7 @@ def install(apps):
         if is_installed(m_):
             continue
         else:
-            m_.install(resource_dir=RESOURCES[repo][app.name])
+            m_.install(io=app.io, resource_dir=RESOURCES[repo][app.name])
 
 
 def main():
