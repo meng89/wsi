@@ -127,6 +127,10 @@ def install(apps):
 
 
 def main():
+    pass
+
+
+def exe_main():
     install()
 
 
