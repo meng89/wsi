@@ -1,5 +1,7 @@
 import os
 
+LOGS_DIR = os.path.join(os.getenv('LOCALAPPDATA'), 'wpi_logs')
+
 
 def get_version_filenames(dirname):
     filenames = []
@@ -127,11 +129,57 @@ def install(apps):
 
 
 def main():
-    pass
+    import sys
+    import ctypes
+    import datetime
+    import tempfile
+
+    from wsi.env import is_exe
+    from wsi.log import set_file_handler, set_stream_handler
+
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+        print('Not run as Administrator!')
+        sys.exit()
+
+    args = list()
+    kwargs = dict()
+
+    for _ in sys.argv[1:]:
+        p_a = _.split('=', 1)
+        if len(p_a) == 1:
+            args.append(_)
+        else:
+            kwargs[p_a[0]] = p_a[1]
+
+    log_filename = datetime.datetime.now().strftime('%Y_%m_%d-%H_%M_%S_%f') + '.log.txt'
+    os.makedirs(LOGS_DIR, exist_ok=True)
+
+    set_file_handler(os.path.join(LOGS_DIR, log_filename))
+    set_stream_handler()
+
+    log_sys_info()
+
+    os.chdir(tempfile.gettempdir())
+
+    if is_exe():
+        exe_main(*args, **kwargs)
+    else:
+        script_main(*args, **kwargs)
 
 
-def exe_main():
+def exe_main(sf=None, cf=None):
     install()
+
+
+def log_sys_info():
+    import sys
+    import logging
+    from wsi.env import CUR_BIT, CUR_OS, PYTHON_BIT
+
+    logging.info('OS bit: {}'.format(CUR_BIT))
+    logging.info('OS release: {}'.format(CUR_OS))
+    logging.info('Python bit: {}'.format(PYTHON_BIT))
+    logging.info('Python sys.version: {}'.format(sys.version))
 
 
 if __name__ == '__main__':

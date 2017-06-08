@@ -1,5 +1,6 @@
 import sys
 import os
+import platform
 
 from collections import OrderedDict
 
@@ -52,3 +53,17 @@ class Env:
         self.name = None
         self.version = None
         self.resource = None
+
+
+CUR_OS = platform.release().lower()
+
+
+if platform.machine().endswith('64'):
+    CUR_BIT = '64'
+elif platform.machine().endswith('86'):
+    CUR_BIT = '32'
+else:
+    raise Exception
+
+
+PYTHON_BIT = platform.architecture()[0][0:2]

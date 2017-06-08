@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "offical": "./scripts/offical",
+    "test": "./scripts/test"
+  },
+  "resources": {
+    "offical": "./resources/offical",
+    "test": "./scripts/test"
+  }
+}
