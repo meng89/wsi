@@ -1,8 +1,3 @@
+scripts_dir = ''
 
-repositories = (
-    './official',
-)
-
-distfileses = (
-    './',
-)
+resources_dir = ''

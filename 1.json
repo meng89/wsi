@@ -1,10 +1,9 @@
-{
-  "scripts": {
-    "offical": "./scripts/offical",
-    "test": "./scripts/test"
+[
+  {
+    "name": "offical",
+    "uri" : "git:"
   },
-  "resources": {
-    "offical": "./resources/offical",
-    "test": "./scripts/test"
+  {
+    "name": ""
   }
-}
+]
