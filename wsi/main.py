@@ -167,8 +167,12 @@ def main():
         script_main(*args, **kwargs)
 
 
-def exe_main(sf=None, cf=None):
+def exe_main(world=None, scripts=None, resources=None):
     install()
+
+
+def script_main(world=None, scripts=None, resources=None):
+    pass
 
 
 def log_sys_info():
