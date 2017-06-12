@@ -1,7 +1,8 @@
 import os
 
 LOGS_DIR = os.path.join(os.getenv('LOCALAPPDATA'), 'wpi_logs')
-
+SCRIPTS_DIR_NAME = 'scripts'
+RESOURCES_DIR_NAME = 'resources'
 
 def get_version_filenames(dirname):
     filenames = []
@@ -168,6 +169,20 @@ def main():
 
 
 def exe_main(world=None, scripts=None, resources=None):
+    import json
+
+    from wsi.env import exe_dir
+
+    scripts = scripts or os.path.join(exe_dir, SCRIPTS_DIR_NAME)
+
+    resources = resources or os.path.join(exe_dir(), RESOURCES_DIR_NAME)
+
+    repos = json.loads(open(os.path.join(exe_dir(), 'repos.josn')).read())
+
+    for one in repos:
+        if 'localtion' not in repos.keys():
+            scripts = 
+        elif os.path.isabs(repos['localtion']):
     install()
 
 
