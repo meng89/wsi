@@ -1,9 +1,13 @@
-[
-  {
-    "name": "offical",
-    "uri" : "git:"
+{
+  "offical": {
+    "scripts": {
+      "location": "",
+      "uri": "git://"
+    },
+    "resources": {
+      "location": "",
+      "uri": "btsync:"}
   },
-  {
-    "name": ""
-  }
-]
+
+  "":{}
+}

@@ -170,6 +170,7 @@ def main():
 
 def exe_main(world=None, scripts=None, resources=None):
     import json
+    from collections import OrderedDict
 
     from wsi.env import exe_dir
 
@@ -177,12 +178,17 @@ def exe_main(world=None, scripts=None, resources=None):
 
     resources = resources or os.path.join(exe_dir(), RESOURCES_DIR_NAME)
 
-    repos = json.loads(open(os.path.join(exe_dir(), 'repos.josn')).read())
+    repos = json.loads(open(os.path.join(exe_dir(), 'repos.josn')).read(), object_pairs_hook=OrderedDict)
 
+    new_repos = []
     for one in repos:
-        if 'localtion' not in repos.keys():
-            scripts = 
-        elif os.path.isabs(repos['localtion']):
+        repo = one
+        if 'localtion' not in one.keys():
+            repo['localtion'] = os.path.join(scripts, repo['name'])
+        else:
+            if os.path.isabs(one['localtion']):
+                repo['location'] = one['location']
+
     install()
 
 
