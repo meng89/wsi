@@ -1,6 +1,8 @@
+import os
+
 from wsi import load_module
 
-from wsi.env import is_exe, exe_dir
+from wsi.env import is_exe, exe_dir, USER_WSI_DIR
 
 
 _world = None
@@ -36,20 +38,37 @@ def get_world():
     if _world is not None:
         return _world
 
-    elif
+    if is_exe():
+        world = os.path.join(exe_dir(), 'world.py')
+        if os.path.exists(world):
+            return world
+
+    world = os.path.join(USER_WSI_DIR, 'world.py')
+    if os.path.exists(world):
+        return world
+
+
+def get_repos():
+    if _repos is not None:
+        return _repos
 
     if is_exe():
-        pass
+        world = os.path.join(exe_dir(), 'repos.py')
+        if os.path.exists(world):
+            return world
+
+    world = os.path.join(USER_WSI_DIR, 'repos.py')
+    if os.path.exists(world):
+        return world
 
 
 def get_scripts():
-    pass
+    if _world is not None:
+
 
 
 def get_resources():
     pass
 
 
-def get_repos():
-    pass
 

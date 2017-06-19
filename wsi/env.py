@@ -67,3 +67,5 @@ else:
 
 
 PYTHON_BIT = platform.architecture()[0][0:2]
+
+USER_WSI_DIR = os.path.join(os.getenv('LOCALAPPDATA'), 'wsi')
