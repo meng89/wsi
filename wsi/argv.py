@@ -24,8 +24,10 @@ def load():
         else:
             kwargs[p_a[0]] = p_a[1]
 
+    save_argv(*args, **kwargs)
 
-def get_scripts(world=None, repos=None, scripts=None, resources=None):
+
+def save_argv(world=None, repos=None, scripts=None, resources=None):
     global _world, _repos, _scripts, _resources
 
     _world = world
@@ -63,12 +65,14 @@ def get_repos():
 
 
 def get_scripts():
-    if _world is not None:
+    if _scripts is not None:
+        return _scripts
 
+    return os.path.join(os.path.dirname(get_repos()), 'scripts')
 
 
 def get_resources():
-    pass
+    if _resources is not None:
+        return _resources
 
-
-
+    return os.path.join(os.path.dirname(get_repos()), 'resources')
