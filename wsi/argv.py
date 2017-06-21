@@ -27,7 +27,7 @@ def load():
     save_argv(*args, **kwargs)
 
 
-def save_argv(world=None, repos=None, scripts=None, resources=None):
+def save_argv(world=None, repos=None, scripts=None, resources=None, conf=None):
     global _world, _repos, _scripts, _resources
 
     _world = world
