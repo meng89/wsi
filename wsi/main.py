@@ -135,22 +135,14 @@ def main():
     import datetime
     import tempfile
 
-    from wsi.env import is_exe
     from wsi.log import set_file_handler, set_stream_handler
+    from wsi.argv import load
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
         print('Not run as Administrator!')
         sys.exit()
 
-    args = list()
-    kwargs = dict()
-
-    for _ in sys.argv[1:]:
-        p_a = _.split('=', 1)
-        if len(p_a) == 1:
-            args.append(_)
-        else:
-            kwargs[p_a[0]] = p_a[1]
+    load()
 
     log_filename = datetime.datetime.now().strftime('%Y_%m_%d-%H_%M_%S_%f') + '.log.txt'
     os.makedirs(LOGS_DIR, exist_ok=True)
@@ -161,11 +153,6 @@ def main():
     log_sys_info()
 
     os.chdir(tempfile.gettempdir())
-
-    if is_exe():
-        exe_main(*args, **kwargs)
-    else:
-        script_main(*args, **kwargs)
 
 
 def exe_main(world=None, scripts=None, resources=None):

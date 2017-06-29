@@ -77,31 +77,25 @@ def get_repos():
         world = os.path.join(exe_dir(), 'repos.py')
         if os.path.exists(world):
             return world
+    else:
+        world = os.path.join(USER_WSI_DIR, 'repos.py')
+        if os.path.exists(world):
+            return world
 
-    world = os.path.join(USER_WSI_DIR, 'repos.py')
-    if os.path.exists(world):
-        return world
 
-
-def get_dire(dire):
-
+def _get_dire(dire):
     if get_repos():
         return os.path.join(os.path.dirname(get_repos()), dire)
 
     if is_exe():
         return os.path.join(os.path.join(exe_dir(), dire))
-
-    return os.path.join(os.path.join(USER_WSI_DIR, dire))
+    else:
+        return os.path.join(os.path.join(USER_WSI_DIR, dire))
 
 
 def get_scripts():
-    if _scripts is not None:
-        return _scripts
-
-    return get_dire('scripts')
+    return _scripts or _get_dire('scripts')
 
 
 def get_resources():
-    if _resources is not None:
-        return _resources
-    return get_dire('resources')
+    return _resources or _get_dire('resources')
