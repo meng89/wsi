@@ -1,8 +1,10 @@
 import os
+import logging
 
 LOGS_DIR = os.path.join(os.getenv('LOCALAPPDATA'), 'wpi_logs')
 SCRIPTS_DIR_NAME = 'scripts'
 RESOURCES_DIR_NAME = 'resources'
+
 
 def get_version_filenames(dirname):
     filenames = []
@@ -155,32 +157,35 @@ def main():
     os.chdir(tempfile.gettempdir())
 
 
-def exe_main(world=None, scripts=None, resources=None):
-    import json
-    from collections import OrderedDict
+def interactive_loop(drivers_dir, m_target_dir):
+    logging.info('m command target dir: '.format(m_target_dir))
 
-    from wsi.env import exe_dir
+    print_head()
+    while True:
+        print()
+        print('Please input a command or printers file:\n' +
+              '  m  Make sample of "world" and make drivers structure directories.\n' +
+              '  l  List all driver names in an archive or an inf file.\n' +
+              '  q  Quit.')
+        print('Cmd or "world" file: ', end='')
 
-    scripts = scripts or os.path.join(exe_dir, SCRIPTS_DIR_NAME)
+        user_input = input().strip()
 
-    resources = resources or os.path.join(exe_dir(), RESOURCES_DIR_NAME)
+        if user_input.lower() == 'm':
+            copy_text_file(original_ps_sample_path(), os.path.join(m_target_dir, USER_SAMPLE_PS_NAME), even_exists=True)
+            target_drivers_dir = os.path.join(m_target_dir, DEFAULT_DIRIVERS_NAME)
+            make_driver_dir_structure(target_drivers_dir)
 
-    repos = json.loads(open(os.path.join(exe_dir(), 'repos.josn')).read(), object_pairs_hook=OrderedDict)
+        elif user_input.lower() == 'l':
+            list_driver_loop()
 
-    new_repos = []
-    for one in repos:
-        repo = one
-        if 'localtion' not in one.keys():
-            repo['localtion'] = os.path.join(scripts, repo['name'])
-        else:
-            if os.path.isabs(one['localtion']):
-                repo['location'] = one['location']
+        elif user_input.lower() in ('q', 'quit', 'e', 'exit'):
+            break
 
-    install()
+        elif user_input.strip().lower().endswith('.py'):
+            module_ = load_module(user_input.strip())
+            install(module_.printers, drivers_dir)
 
-
-def script_main(world=None, scripts=None, resources=None):
-    pass
 
 
 def log_sys_info():
