@@ -156,36 +156,31 @@ def main():
 
     os.chdir(tempfile.gettempdir())
 
+    from wsi.argv import get_world
 
-def interactive_loop(drivers_dir, m_target_dir):
-    logging.info('m command target dir: '.format(m_target_dir))
+    if get_world() is not None:
+        install(get_world().apps)
+    else:
+        interactive_loop()
 
+
+def interactive_loop():
     print_head()
     while True:
         print()
-        print('Please input a command or printers file:\n' +
-              '  m  Make sample of "world" and make drivers structure directories.\n' +
-              '  l  List all driver names in an archive or an inf file.\n' +
+        print('Please input a command or world file:\n' +
               '  q  Quit.')
         print('Cmd or "world" file: ', end='')
 
         user_input = input().strip()
 
-        if user_input.lower() == 'm':
-            copy_text_file(original_ps_sample_path(), os.path.join(m_target_dir, USER_SAMPLE_PS_NAME), even_exists=True)
-            target_drivers_dir = os.path.join(m_target_dir, DEFAULT_DIRIVERS_NAME)
-            make_driver_dir_structure(target_drivers_dir)
-
-        elif user_input.lower() == 'l':
-            list_driver_loop()
-
-        elif user_input.lower() in ('q', 'quit', 'e', 'exit'):
+        if user_input.lower() in ('q', 'quit', 'e', 'exit'):
             break
 
         elif user_input.strip().lower().endswith('.py'):
+            from wsi import load_module
             module_ = load_module(user_input.strip())
-            install(module_.printers, drivers_dir)
-
+            install(module_.apps)
 
 
 def log_sys_info():
@@ -197,6 +192,52 @@ def log_sys_info():
     logging.info('OS release: {}'.format(CUR_OS))
     logging.info('Python bit: {}'.format(PYTHON_BIT))
     logging.info('Python sys.version: {}'.format(sys.version))
+
+
+def print_head():
+    from shutil import get_terminal_size
+    from wsi import version
+
+    conlose_len = get_terminal_size()[0] - 2
+    cl = conlose_len
+
+    header_len = min([62, cl]) - 2
+    hl = header_len
+
+    item_left = 2
+
+    def _(s):
+        return s
+        # return '{:^{}}'.format(s, cl)
+
+    def sharp():
+        s = '#' * hl
+        return _(s)
+
+    def _wpi():
+        s = '{:^{}}'.format('Windows Printer Installer', hl)
+        return _(s)
+
+    def _item(k, v):
+        s = '{}: {}'.format(k, v)
+        s = (' ' * item_left) + s
+        s += ' ' * (hl - len(s))
+        return _(s)
+
+    ss = [
+        sharp(),
+        '',
+        _wpi(),
+        '',
+        _item('Version', version.__version__),
+        _item('License', 'LGPL v3'),
+        _item('Author', 'Chen Meng'),
+        _item('HomePage', 'https://github.com/meng89/wpi'),
+        sharp(),
+    ]
+
+    for _ in ss:
+        print(_)
 
 
 if __name__ == '__main__':
