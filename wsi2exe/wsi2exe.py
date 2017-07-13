@@ -73,7 +73,7 @@ def run_verpatch(exe_path, verpatch_path):
           '/s description "Windows Printer Installer" '\
           '/s product "Windows Printer Installer" '\
           '/s copyright "Chen Meng, 2017" '\
-          .format(verpatch_path, exe_path, version=wpi.version.__version__ + '.0', )
+          .format(verpatch_path, exe_path, version=wsi.version.__version__ + '.0', )
 
     print('\nverpathc cmd: \n', cmd, '\n')
 
@@ -83,7 +83,7 @@ def run_verpatch(exe_path, verpatch_path):
 def find_7z_path():
     regkeys = (r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
                r'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall')
-    from wsi.reg import Node
+    from winger import Node
 
     for one in regkeys:
         n = Node(one)
@@ -93,8 +93,8 @@ def find_7z_path():
 
 
 def bundle_files():
-    from wpi import ps_sample
-    from wpi.env import get_szip_dir, SZIP_EXE, SZIP_DLL
+    from wsi import ps_sample
+    from wsi.env import get_szip_dir, SZIP_EXE, SZIP_DLL
     return (
         os.path.join(get_szip_dir(), SZIP_EXE),
         os.path.join(get_szip_dir(), SZIP_DLL),
@@ -103,12 +103,12 @@ def bundle_files():
 
 
 def main():
-    import wpi.main
+    import wsi.main
 
-    from wpi import env
-    from wpi import load_module
+    from wsi import env
+    from wsi import load_module
 
-    from wpi2exe import config_
+    from wsi2exe import config_
 
     os.chdir(tempfile.gettempdir())
 
@@ -121,8 +121,8 @@ def main():
     user_config__path = os.path.join(config_dir, config__filename)
     user_config_path = os.path.join(config_dir, 'config.py')
 
-    wpi.main.copy_text_file(config_.__file__, user_config__path, even_exists=True)
-    wpi.main.copy_text_file(config_.__file__, user_config_path, even_exists=False)
+    wsi.main.copy_text_file(config_.__file__, user_config__path, even_exists=True)
+    wsi.main.copy_text_file(config_.__file__, user_config_path, even_exists=False)
 
     config = load_module(user_config_path)
 
@@ -140,7 +140,7 @@ def main():
 
     def do_build(console_, output_filename_):
         build(
-            script=os.path.join(wpi.main.__file__),
+            script=os.path.join(wsi.main.__file__),
             distpath=output_dir,
             name=output_filename_,
             console=console_,
@@ -151,7 +151,7 @@ def main():
         if verpatch_path is not None:
             run_verpatch(verpatch_path=verpatch_path, exe_path=os.path.join(output_dir, output_filename_ + '.exe'))
 
-    do_build(True, '{}-{}'.format(output_filename, wpi.version.__version__))
+    do_build(True, '{}-{}'.format(output_filename, wsi.version.__version__))
     # (do_build(False, '{}_nw-{}'.format(output_filename, wpi.version.__version__))
 
 
