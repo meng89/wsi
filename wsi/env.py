@@ -41,7 +41,8 @@ def exe_dir():
 def wincdemu_path():
     if is_exe():
         return os.path.join(meipass_path(), BUNDLE_DATA_FOLDER, WINCDEMU_NAME)
-    elif
+
+    
     else:
         raise FileNotFoundError
 
